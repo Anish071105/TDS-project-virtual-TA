@@ -1,0 +1,12 @@
+scikit-learn
+fastapi
+uvicorn
+openai
+google-generativeai
+asyncio
+numpy
+requests
+beautifulsoup4
+playwright
+pydantic
+
