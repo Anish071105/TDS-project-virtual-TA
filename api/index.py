@@ -101,7 +101,7 @@ async def find_best_chunk(
 
     idx = int(np.argmax(sims))
     score = float(sims[idx])
-    if score < 0.2:
+    if score < 0.3:
         return None
 
     chunk = metadata[idx].copy()
