@@ -133,14 +133,28 @@ async def startup_event():
     global embeddings_data, chunks_metadata
 
     try:
-        data = np.load(EMBEDDING_FILE, allow_pickle=True)
+        # Absolute path fix
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        EMBEDDING_FILE_PATH = os.path.join(script_dir, "..", "embedding.npz")
+
+        print("📂 Current working directory:", os.getcwd())
+        print("📁 Script directory:", script_dir)
+        print("📄 Embedding file path:", EMBEDDING_FILE_PATH)
+        print("📁 Contents of script dir:", os.listdir(script_dir))
+        print("📁 Contents of parent dir:", os.listdir(os.path.join(script_dir, "..")))
+
+        # Try loading
+        data = np.load(EMBEDDING_FILE_PATH, allow_pickle=True)
         embeddings_data = np.array(data["vectors"])
         chunks_metadata = list(data["metadata"])
+
         print(f"✅ Loaded {len(embeddings_data)} embeddings")
+
     except Exception as e:
         print("❌ Failed loading embeddings:", e)
         embeddings_data = np.array([])
         chunks_metadata = []
+
 
 # ——— 7) API ROUTE ———
 @app.post("/api/", response_model=QueryResponse)
